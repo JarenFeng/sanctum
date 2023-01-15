@@ -14,6 +14,7 @@ class PersonalAccessToken extends Model implements HasAbilities
      */
     protected $casts = [
         'abilities' => 'json',
+        'extra' => 'json',
         'last_used_at' => 'datetime',
     ];
 
@@ -50,7 +51,7 @@ class PersonalAccessToken extends Model implements HasAbilities
     /**
      * Find the token instance matching the given token.
      *
-     * @param  string  $token
+     * @param string $token
      * @return static|null
      */
     public static function findToken($token)
@@ -69,23 +70,23 @@ class PersonalAccessToken extends Model implements HasAbilities
     /**
      * Determine if the token has a given ability.
      *
-     * @param  string  $ability
+     * @param string $ability
      * @return bool
      */
     public function can($ability)
     {
         return in_array('*', $this->abilities) ||
-               array_key_exists($ability, array_flip($this->abilities));
+            array_key_exists($ability, array_flip($this->abilities));
     }
 
     /**
      * Determine if the token is missing a given ability.
      *
-     * @param  string  $ability
+     * @param string $ability
      * @return bool
      */
     public function cant($ability)
     {
-        return ! $this->can($ability);
+        return !$this->can($ability);
     }
 }
